@@ -1,4 +1,5 @@
-#Developed by Magnus Berg, 2023 for the University of Toronto, Mississauga Digital Scholarship Unit#
+#Developed by Magnus Berg, 2023 for the University of Toronto, Mississauga Digital Scholarship Unit
+#Are you telling me a TRANS coded this film?
 
 import os
 import FreeSimpleGUI as sg

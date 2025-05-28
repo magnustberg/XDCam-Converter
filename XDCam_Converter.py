@@ -119,7 +119,7 @@ def mxf_combine_4(main_dir, video_stream, audio_channel1, audio_channel2, audio_
 def create_master(master_dir, master_file_name, user_filename, mxf_output_name, master_log):
 #creates a master file (ffv1 mkv) and md5 checksum file based on the temporary mxf
 	master_md5 = os.path.join(master_dir, user_filename+'.md5')
-	master_file_str = r'ffmpeg -i ' + str(mxf_output_name) + ' -dn -c:v ffv1 -level 3 -g 1 -slicecrc 1 -slices 9 -copyts -vf "yadif, format=yuv422p" -c:a copy -loglevel error ' + str(master_file_name) + ' -f framemd5 -an ' + str(master_md5) 
+	master_file_str = r'ffmpeg -i ' + str(mxf_output_name) + ' -dn -c:v ffv1 -level 3 -g 1 -slicecrc 1 -slices 9 -copyts -vf "format=yuv422p" -c:a copy -loglevel error ' + str(master_file_name) + ' -f framemd5 -an ' + str(master_md5) 
 
 	master_file = subprocess.run(master_file_str, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 	master_file.stdout = open(master_log, 'w')
@@ -127,7 +127,7 @@ def create_master(master_dir, master_file_name, user_filename, mxf_output_name, 
 
 def create_access(access_dir, access_file_name, mxf_output_name, access_log):
 #creates an access file (mp4) based on the temporary mxf
-	access_file_str = r'ffmpeg -i ' + str(mxf_output_name) + ' -c:v libx264 -copyts -filter:v "yadif, scale=1440:1080:flags=lanczos, pad=1920:1080:(ow-iw)/2:(oh-ih)/2, format=yuv422p" -crf 28 -movflags +faststart -loglevel error ' + str(access_file_name)	
+	access_file_str = r'ffmpeg -i ' + str(mxf_output_name) + ' -c:v libx264 -copyts -filter:v "format=yuv422p" -crf 28 -movflags +faststart -loglevel error ' + str(access_file_name)	
 
 	access_file = subprocess.run(access_file_str, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 	access_file.stdout = open(access_log, 'w')
